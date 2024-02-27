@@ -6,6 +6,6 @@ namespace ServerLibrary.Repositories.Contracts
     {
 
         Task<GeneralResponse> CreateAsync(Register user);
-        Task<LoginResponse> SignAsync(Login user);
+        Task<LoginResponse> SignInAsync(Login user);
     }
 }
