@@ -1,6 +1,7 @@
+using BaseLibrary.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BackEnd.Controllers
+namespace Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
