@@ -1,30 +1,45 @@
 ﻿
 using BaseLibrary.DTOs;
 using BaseLibrary.Responses;
+using ClientLibrary.Helpers;
 using ClientLibrary.Services.Contracts;
+using System.Net.Http.Json;
 
 namespace ClientLibrary.Services.Implementations
 {
-    internal class UserAccountService : IUserAccountService
+    public class UserAccountService(GetHttpClient getHttpClient) : IUserAccountService
     {
-        Task<GeneralResponse> IUserAccountService.CreateAsync(Register user)
+        public const string AuthUrl = "api/authentication";
+
+       public async Task<GeneralResponse> CreateAsync(Register user)
+        {
+            var httpClient = getHttpClient.GetPublicHttpClient();
+            var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/register", user);
+            if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "Error occurred");
+
+            return await result.Content.ReadFromJsonAsync<GeneralResponse>()!;
+            
+        }
+
+       public async Task<LoginResponse> SignInAsync(Login user)
+        {
+            var httpClient = getHttpClient.GetPublicHttpClient();
+            var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", user);
+            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "Error occurred");
+
+            return await result.Content.ReadFromJsonAsync<LoginResponse>()!;
+        }
+
+       public Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
         {
             throw new NotImplementedException();
         }
 
-        Task<LoginResponse> IUserAccountService.SignInAsync(Login user)
+       public async Task<WeatherForecast[]> GetWeatherForecasts()
         {
-            throw new NotImplementedException();
-        }
-
-        Task<LoginResponse> IUserAccountService.RefreshTokenAsync(RefreshToken token)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<WeatherForecast[]> IUserAccountService.GetWeatherForecasts()
-        {
-            throw new NotImplementedException();
+            var httpClient =  await getHttpClient.GetPrivateHttpClient();
+            var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("api/weatherforecast");
+            return result!;
         }
     }
 }
