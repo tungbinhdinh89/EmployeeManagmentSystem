@@ -1,5 +1,7 @@
 ﻿@page "/nav"
+@using Client.ApplicationStates
 @using Microsoft.AspNetCore.Components.Authorization
+@inject DepartmentState departmentState
 
 <AuthorizeView>
     <Authorized>
@@ -53,7 +55,7 @@
                     <div class="nav-link p-2 text-white" style="margin-left: 5rem; visibility:@DepartmentCssStyle">
                         <ul class="list-group">
                             <li style="list-style:none" class="cusorStyle">
-                                <a class="nav-link p-2" >
+                                <a class="nav-link p-2" @onclick="GeneralDepartmentClicked">
                                     <div class="hstack text-wrap">
                                         <span class="bi bi-file-medical fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
                                         <span class="fs-6">General</span>
@@ -102,7 +104,7 @@
     private void ShowAdminMenuContainer()
     {
         ShowHide = !ShowHide;
-        if(ShowHide)
+        if (ShowHide)
         {
             DepartmentMargin = "0";
             CssStyle = "visible";
@@ -122,5 +124,10 @@
         if (ShowHideDepartment) DepartmentCssStyle = "visible";
         else DepartmentCssStyle = "hidden";
 
+    }
+
+    void GeneralDepartmentClicked()
+    {
+        departmentState.GeneralDepartmentClicked();
     }
 }
