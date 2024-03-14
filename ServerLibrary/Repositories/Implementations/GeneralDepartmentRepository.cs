@@ -32,7 +32,7 @@ namespace ServerLibrary.Repositories.Implementations
             var depart = await dbContext.GeneralDepartments.FindAsync(id);
             if (depart is null)
             {
-                return new();
+                return new GeneralDepartment();
             }
             return depart;
         }
@@ -70,7 +70,7 @@ namespace ServerLibrary.Repositories.Implementations
 
         private async Task<bool> CheckName(string name)
         {
-            var item = await dbContext.Departments.FirstOrDefaultAsync(x => x.Name!.ToLower().Equals(name.ToLower().Trim()));
+            var item = await dbContext.Departments.FirstOrDefaultAsync(x => x.Name!.ToLower().Trim().Equals(name.ToLower().Trim()));
             return item is null;
         }
     }
