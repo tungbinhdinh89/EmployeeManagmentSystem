@@ -51,8 +51,8 @@ namespace ServerLibrary.Repositories.Implementations
             return Success();
         }
 
-        private GeneralResponse NotFound() => new(false, "Sorry, Department not found");
-        private GeneralResponse Success() => new(true, "Process completed");
+        private static GeneralResponse NotFound() => new(false, "Sorry, Department not found");
+        private static GeneralResponse Success() => new(true, "Process completed");
         private async Task Commit() => await dbContext.SaveChangesAsync();
         private async Task<bool> CheckName(string name)
         {
