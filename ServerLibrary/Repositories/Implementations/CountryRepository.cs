@@ -6,7 +6,7 @@ using ServerLibrary.Repositories.Contracts;
 
 namespace ServerLibrary.Repositories.Implementations
 {
-    internal class CountryRepository(ApplicationDbContext dbContext) : IGenericRepositoryInterface<Country>
+    public class CountryRepository(ApplicationDbContext dbContext) : IGenericRepositoryInterface<Country>
     {
         public async Task<GeneralResponse> DeleteById(int id)
         {
