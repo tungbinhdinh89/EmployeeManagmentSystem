@@ -6,7 +6,7 @@ using ServerLibrary.Repositories.Contracts;
 
 namespace ServerLibrary.Repositories.Implementations
 {
-    internal class CityRepository(ApplicationDbContext dbContext) : IGenericRepositoryInterface<City>
+    public class CityRepository(ApplicationDbContext dbContext) : IGenericRepositoryInterface<City>
     {
         public async Task<GeneralResponse> DeleteById(int id)
         {
