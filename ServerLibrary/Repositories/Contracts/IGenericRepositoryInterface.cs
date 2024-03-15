@@ -2,7 +2,7 @@
 
 namespace ServerLibrary.Repositories.Contracts
 {
-    internal interface IGenericRepositoryInterface<T>
+    public interface IGenericRepositoryInterface<T>
     {
         Task<List<T>> GetAll();
         Task<T> GetById(int id);
