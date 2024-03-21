@@ -31,7 +31,7 @@ namespace Server.Controllers
             return Ok(await genericRepositoryInterface.Insert(model));
         }
 
-        [HttpPut("update/{id}")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update(T model)
         {
             if (model is null) return BadRequest("Bad request made");
