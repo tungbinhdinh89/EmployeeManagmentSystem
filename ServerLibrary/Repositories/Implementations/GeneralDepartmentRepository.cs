@@ -39,9 +39,10 @@ namespace ServerLibrary.Repositories.Implementations
 
         public async Task<GeneralResponse> Insert(GeneralDepartment item)
         {
-            if (!await CheckName(item.Name!))
+            var checkIfNull = await CheckName(item.Name);
+            if (!checkIfNull)
             {
-                return new GeneralResponse(false, "Department already added!");
+                return new GeneralResponse(false, "General Department already added!");
             }
 
             dbContext.GeneralDepartments.Add(item);
@@ -62,7 +63,7 @@ namespace ServerLibrary.Repositories.Implementations
             return Success();
         }
 
-        private static GeneralResponse NotFound() => new(false, "Sorry, department not found");
+        private static GeneralResponse NotFound() => new(false, "Sorry, general department not found");
 
         private static GeneralResponse Success() => new(true, "Process completed");
 
@@ -70,7 +71,7 @@ namespace ServerLibrary.Repositories.Implementations
 
         private async Task<bool> CheckName(string name)
         {
-            var item = await dbContext.Departments.FirstOrDefaultAsync(x => x.Name!.ToLower().Trim().Equals(name.ToLower().Trim()));
+            var item = await dbContext.GeneralDepartments.FirstOrDefaultAsync(x => x.Name!.ToLower().Trim().Equals(name.ToLower().Trim()));
             return item is null;
         }
     }

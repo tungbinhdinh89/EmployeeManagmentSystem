@@ -42,7 +42,7 @@ namespace ServerLibrary.Repositories.Implementations
         {
             var country = await dbContext.Countries.FindAsync(item.Id);
             if (country is null) return NotFound();
-            item.Name = country.Name;
+            country.Name = item.Name;
             await Commit();
             return Success();
         }
