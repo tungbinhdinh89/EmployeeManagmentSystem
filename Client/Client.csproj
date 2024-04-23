@@ -23,4 +23,8 @@
     <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\ContentPages\UserPages\" />
+  </ItemGroup>
+
 </Project>
