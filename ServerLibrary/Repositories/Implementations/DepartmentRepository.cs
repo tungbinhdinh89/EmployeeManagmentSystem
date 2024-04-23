@@ -21,7 +21,10 @@ namespace ServerLibrary.Repositories.Implementations
             return Success();
         }
 
-        public async Task<List<Department>> GetAll() => await dbContext.Departments.ToListAsync();
+        public async Task<List<Department>> GetAll() => await dbContext
+            .Departments.AsNoTracking()
+            .Include(gd => gd.GeneralDepartment)
+            .ToListAsync();
 
         public async Task<Department> GetById(int id)
         {
@@ -47,6 +50,7 @@ namespace ServerLibrary.Repositories.Implementations
             var depart = await dbContext.Departments.FindAsync(item.Id);
             if (depart is null) return NotFound();
             depart.Name = item.Name;
+            depart.GeneralDepartmentId = item.GeneralDepartmentId;
             await Commit();
             return Success();
         }

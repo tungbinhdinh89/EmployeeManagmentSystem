@@ -21,7 +21,11 @@ namespace ServerLibrary.Repositories.Implementations
             return Success();
         }
 
-        public async Task<List<Town>> GetAll() => await dbContext.Towns.ToListAsync();
+        public async Task<List<Town>> GetAll() => await dbContext
+            .Towns
+            .AsNoTracking()
+            .Include(c => c.City)
+            .ToListAsync();
 
         public async Task<Town> GetById(int id)
         {
@@ -32,7 +36,7 @@ namespace ServerLibrary.Repositories.Implementations
 
         public async Task<GeneralResponse> Insert(Town item)
         {
-            if (!await CheckName(item.Name)) return new GeneralResponse(false, "Branch is already add");
+            if (!await CheckName(item.Name)) return new GeneralResponse(false, $"{item.Name} is already add");
             dbContext.Towns.Add(item);
             await Commit();
             return Success();
@@ -42,7 +46,8 @@ namespace ServerLibrary.Repositories.Implementations
         {
             var town = await dbContext.Towns.FindAsync(item.Id);
             if (town is null) return NotFound();
-            item.Name = town.Name;
+            town.Name = item.Name;
+            town.CityId = item.CityId;
             await Commit();
             return Success();
         }
