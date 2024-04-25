@@ -48,4 +48,6 @@ builder.Services.AddScoped<AllState>();
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddScoped<SfDialogService>();
 
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzI0MTk3OUAzMjMzMmUzMDJlMzBIdjdqQW05aVJ6ZE0rTVUwYXpjSlo2ZGplN2pSNnkyTVlDN0RTU3BCREVRPQ==");
+
 await builder.Build().RunAsync();
