@@ -1,6 +1,5 @@
 ﻿using BaseLibrary.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServerLibrary.Repositories.Contracts;
 
@@ -33,6 +32,36 @@ namespace Server.Controllers
         {
             if (token == null) return BadRequest("Model is empty");
             var result = await accountInterface.RefreshTokenAsync(token);
+            return Ok(result);
+        }
+
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUserAsync()
+        {
+            var user = await accountInterface.GetUsers();
+            if (user == null) return NotFound();
+            return Ok(user);
+        }
+
+        [HttpGet("roles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = await accountInterface.GetRoles();
+            if (roles == null) return NotFound();
+            return Ok(roles);
+        }
+
+        [HttpPut("update-user")]
+        public async Task<IActionResult> UpdateUser(ManageUser manageUser)
+        {
+            var result = await accountInterface.UpdateUser(manageUser);
+            return Ok(result);
+        }
+
+        [HttpDelete("delete-user/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var result = await accountInterface.DeleteUser(id);
             return Ok(result);
         }
     }
